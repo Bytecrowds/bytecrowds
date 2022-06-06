@@ -1,0 +1,8 @@
+# ENV specs
+- CALLBACK_URL => string
+- CALLBACK_TIMEOUT => int
+- CALLBACK_OBJECTS => string (JSON)
+- HOST => string
+- PORT => int
+- CALLBACK_DEBOUNCE_WAIT => int
+- CALLBACK_DEBOUNCE_MAXWAIT => int
