@@ -1,5 +1,5 @@
 # IMPORTANT!
-This is a unified repository created solely for the purpose of participating in infoeducatie contest and is updated regularly. To see the most recent, timelined version check the following repositories: [bytecrowds-frontend](https://github.com/TudorZgimbau/bytecrowds-frontend/tree/main), [bytecrowds-database-server](https://github.com/TudorZgimbau/bytecrowds-database-server/tree/main), [bytecrowds-workers](https://github.com/TudorZgimbau/bytecrowds-workers/tree/main) and [bytecrowds-websocket-server](https://github.com/TudorZgimbau/bytecrowds-websocket-server/tree/main)
+This is a unified repository created solely for the purpose of participating in infoeducatie contest and is updated regularly. To see the most recent, timelined version check the following repositories: [frontend](https://github.com/TudorZgimbau/bytecrowds-frontend/tree/main), [database-server](https://github.com/TudorZgimbau/bytecrowds-database-server/tree/main), [workers](https://github.com/TudorZgimbau/bytecrowds-workers/tree/main) and [websocket-server](https://github.com/TudorZgimbau/bytecrowds-websocket-server/tree/main)
 
 # bytecrowds
 A unified repository for the code-sharing platform Bytecrowds
