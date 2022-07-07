@@ -1,3 +1,6 @@
+# IMPORTANT!
+This is a unified repository created solely for the purpose of participating in infoeducatie contest and is updated regularly. To see the most recent, timelined version check the following repositories: [bytecrowds-frontend](https://github.com/TudorZgimbau/bytecrowds-frontend/tree/main), [bytecrowds-database-server](https://github.com/TudorZgimbau/bytecrowds-database-server/tree/main), [bytecrowds-workers](https://github.com/TudorZgimbau/bytecrowds-workers/tree/main) and [bytecrowds-websocket-server](https://github.com/TudorZgimbau/bytecrowds-websocket-server/tree/main)
+
 # bytecrowds
 A unified repository for the code-sharing platform Bytecrowds
 
@@ -18,7 +21,7 @@ A unified repository for the code-sharing platform Bytecrowds
   We use the y.js-codemirror bindings on react-codemirror and connect the editor to the global SyncedStore object.
   
 ## Backend
-  * [ws](https://www.npmjs.com/package/ws) as the node websockets implementation; used the [y.js template server](https://github.com/yjs/y-websocket/tree/master/bin)
+  * we are using a custom [ably](https://ably.com/) provider for syncing the client and scaling the infrastructure
   * go, specifically the [gin](https://gin-gonic.com/) framework for the database interaction server
 
 ## Serverless
