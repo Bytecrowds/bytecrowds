@@ -1,0 +1,16 @@
+{
+  "name": "database-server",
+  "version": "0.0.0",
+  "devDependencies": {
+    "wrangler": "2.0.16"
+  },
+  "private": true,
+  "scripts": {
+    "start": "wrangler dev",
+    "deploy": "wrangler publish"
+  },
+  "dependencies": {
+    "@tsndr/cloudflare-worker-router": "^2.0.1",
+    "@upstash/redis": "^1.7.0"
+  }
+}

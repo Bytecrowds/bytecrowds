@@ -1,8 +1,0 @@
-name = "analytics"
-type = "webpack"
-
-account_id = "<ACCOUNT_ID>"
-workers_dev = true
-route = ""
-zone_id = ""
-compatibility_date = "2022-02-01"

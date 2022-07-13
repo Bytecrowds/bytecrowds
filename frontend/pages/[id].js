@@ -1,50 +1,56 @@
-import Head from "next/head";
 import { useRouter } from "next/router";
 import dynamic from "next/dynamic";
 const Editor = dynamic(() => import("../components/editor"), {
-    ssr: false
+  ssr: false,
 });
 
 export async function getServerSideProps(context) {
-    const { id } = context.query;
-    const databaseServer = process.env.NEXT_PUBLIC_DATABASE_SERVER;
+  const { id } = context.query;
 
-    let _text1 = await fetch(databaseServer + "/get/" + id);
-    let editorText = await _text1.text();
+  let _raw = await fetch(
+    process.env.NEXT_PUBLIC_BACKEND + "/bytecrowd/" + id
+  );
+  let bytecrowd = await _raw.json();
 
-    let _text2 = await fetch(databaseServer + "/getLanguage/" + id);
-    let editorInitialLanguage = await _text2.text();
+  let requiresUpdate = false;
+  let _res = await fetch("https://rest.ably.io/channels/" + id + "/presence", {
+    headers: {
+      Authorization:
+        "Basic " +
+        Buffer.from(process.env.NEXT_PUBLIC_ABLY_API_KEY).toString("base64"),
+    },
+  });
+  if ((await _res.json()).length == 0) requiresUpdate = true;
 
-    if (editorInitialLanguage === "") {
-        editorInitialLanguage = "javascript()";
-    }
+  let editorInitialText = bytecrowd.text || "";
+  let editorInitialLanguage = bytecrowd.language || "javascript()";
 
-    return {
-        props: {
-            editorText,
-            editorInitialLanguage
-        }
-    }
+  return {
+    props: {
+      editorInitialText,
+      editorInitialLanguage,
+      requiresUpdate,
+    },
+  };
 }
 
+const Bytecrowd = ({
+  editorInitialText,
+  editorInitialLanguage,
+  requiresUpdate,
+}) => {
+  const { id } = useRouter().query;
 
-
-const Bytecrowd = ({ editorText, editorInitialLanguage }) => {
-    const { id } = useRouter().query;
-
-    return (
-        <>
-            <Head>
-                <title>Bytecrowd editor - {id}</title>
-            </Head>
-            <Editor
-                id={id}
-                editorText={editorText}
-                editorInitialLanguage={editorInitialLanguage}>
-            </Editor>
-        </>
-    )
+  return (
+    <>
+      <Editor
+        id={id}
+        editorInitialText={editorInitialText}
+        editorInitialLanguage={editorInitialLanguage}
+        requiresUpdate={requiresUpdate}
+      ></Editor>
+    </>
+  );
 };
-
 
 export default Bytecrowd;

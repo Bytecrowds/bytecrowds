@@ -1,23 +1,27 @@
-import Head from "next/head"
-import NextLink from 'next/link';
-import { useState } from "react"
+import Head from "next/head";
+import NextLink from "next/link";
+import { useState } from "react";
 import { useEffect } from "react";
-import { Flex } from '@chakra-ui/react';
+import { Flex } from "@chakra-ui/react";
 import { Link } from "@chakra-ui/react";
-import { Spacer } from '@chakra-ui/react';
-import { Text } from '@chakra-ui/react';
-import { Button } from '@chakra-ui/react';
-
+import { Spacer } from "@chakra-ui/react";
+import { Text } from "@chakra-ui/react";
+import { Button } from "@chakra-ui/react";
 
 const Home = () => {
   const [randomLink, setRandomLink] = useState("/snippetzone");
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
-    setRandomLink("/" + Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 7));
+    setRandomLink(
+      "/" +
+        Math.random()
+          .toString(36)
+          .replace(/[^a-z]+/g, "")
+          .substring(0, 7)
+    );
     setIsMounted(true);
-  }, [])
-
+  }, []);
 
   return (
     <>
@@ -146,6 +150,6 @@ const Home = () => {
       </Flex>
     </>
   );
-}
+};
 
 export default Home;
