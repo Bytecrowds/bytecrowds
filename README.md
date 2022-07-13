@@ -1,8 +1,11 @@
 # IMPORTANT!
 This is a unified repository created solely for the purpose of participating in infoeducatie contest and is updated regularly. To see the most recent, timelined version check the [frontend](https://github.com/Bytecrowds/frontend) and [backend](https://github.com/Bytecrowds/backend) repositories.
 
-# bytecrowds
+# Bytecrowds
 A unified repository for the code sharing platform Bytecrowds
+
+# Architecture
+![architecture](./assets/bytecrowds.drawio.png)
 
 # How to run?
   - Git clone the [frontend](https://github.com/Bytecrowds/frontend) and [backend](https://github.com/Bytecrowds/backend) repositories;
