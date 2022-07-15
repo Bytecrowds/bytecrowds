@@ -1,8 +1,23 @@
 # IMPORTANT!
 This is a unified repository created solely for the purpose of participating in infoeducatie contest and is updated regularly. To see the most recent, timelined version check the [frontend](https://github.com/Bytecrowds/frontend) and [backend](https://github.com/Bytecrowds/backend) repositories.
 
-# Bytecrowds
-A unified repository for the code sharing platform Bytecrowds
+# Description
+> What's Bytecrowds?
+
+Bytecrowds is a simple and reliable serverless code sharing platform, which goal is to allow programmers to share code with peers in seconds.
+
+> How does it differ from other code sharing platforms?
+
+The infrastructure we use relies on serverless functions to maximize the reability of the app, making requests on edge and auto-scaling
+
+> Why serverless?
+
+Serverless allows us to focus on code rather than infrastructure operations, which can cause a lot of problems when you need maximum stability and scaling.
+
+> Isn't serverless emptying pockets with that many requests/second?
+
+The short answer would be no. We use [Ably](https://ably.com/) to sync the peers which is a serverless solution created specially for real-time services.
+Also, although we are sending a large number of requests to workers and DB, we also don't have any concerns about the speed and realibility of the app, which at scale can become a really challenging cost to deal with, both time and money wise.
 
 # Architecture
 ![architecture](./assets/bytecrowds.drawio.png)
@@ -10,6 +25,7 @@ A unified repository for the code sharing platform Bytecrowds
 # How to run?
   - Git clone the [frontend](https://github.com/Bytecrowds/frontend) and [backend](https://github.com/Bytecrowds/backend) repositories;
   - Create the .env files and set the variables accordingly;
+  - (optional) Install [wrangler](https://github.com/cloudflare/wrangler2) and deploy a local version of the workers
   - IMPORTANT! Because of an underlying [issue](https://github.com/YousefED/reactive/issues/8) on [reactive](https://github.com/YousefED/reactive), the react dependecy of the library needs to be manually deleted.
 
 
