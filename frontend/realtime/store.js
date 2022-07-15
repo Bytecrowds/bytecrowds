@@ -2,6 +2,7 @@ import { syncedStore } from "@syncedstore/core";
 import AblyProvider from "./ablyProvider";
 import * as Ably from "ably";
 
+// Setup a text field on the SyncedStore object.
 const store = syncedStore({ bytecrowdText: "text" });
 export default store;
 

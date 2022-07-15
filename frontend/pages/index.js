@@ -10,6 +10,7 @@ import { Button } from "@chakra-ui/react";
 
 const Home = () => {
   const [randomLink, setRandomLink] = useState("/snippetzone");
+  // Set this to true when the hydration finished.
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
@@ -106,6 +107,7 @@ const Home = () => {
             fontSize="30px"
             fontWeight="600"
             onClick={() =>
+              // We don't have acces to window.location on the server.
               isMounted ? (location.href = randomLink) : undefined
             }
           >

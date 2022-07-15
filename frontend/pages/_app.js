@@ -3,6 +3,7 @@ import { ChakraProvider } from "@chakra-ui/react";
 import { useEffect } from "react";
 
 function MyApp({ Component, pageProps }) {
+  // Send the IP adress and current page to the analytics server.
   //useEffect(() => {
   //  async function fetchAnalytics() {
   //    let page = document.URL.substring(27);

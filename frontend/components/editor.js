@@ -2,19 +2,6 @@ import { useEffect, useState } from "react";
 import { useSyncedStore } from "@syncedstore/react";
 import CodeMirror from "@uiw/react-codemirror";
 import { oneDark } from "@codemirror/theme-one-dark";
-import { javascript } from "@codemirror/lang-javascript";
-import { cpp } from "@codemirror/lang-cpp";
-import { html } from "@codemirror/lang-html";
-import { css } from "@codemirror/lang-css";
-import { json } from "@codemirror/lang-json";
-import { markdown } from "@codemirror/lang-markdown";
-import { rust } from "@codemirror/lang-rust";
-import { xml } from "@codemirror/lang-xml";
-import { java } from "@codemirror/lang-java";
-import { wast } from "@codemirror/lang-wast";
-import { php } from "@codemirror/lang-php";
-import { lezer } from "@codemirror/lang-lezer";
-import { python } from "@codemirror/lang-python";
 
 import { yCollab, yUndoManagerKeymap } from "y-codemirror.next";
 import { keymap } from "@codemirror/view";
@@ -23,42 +10,35 @@ import store from "../realtime/store";
 import { getAblyProvider } from "../realtime/store";
 
 import updateDB from "../utils/updateDB";
+import { langs, langOptions } from "../utils/language";
 
 const Editor = ({
   id,
   editorInitialText,
   editorInitialLanguage,
-  requiresUpdate,
+  fetchFromDB,
 }) => {
-  const [editorLanguage, setEditorLanguage] = useState(javascript());
+  const [editorLanguage, setEditorLanguage] = useState(
+    langs[editorInitialLanguage]
+  );
   const [prevText, setPrevText] = useState(editorInitialText);
   const editorText = useSyncedStore(store).bytecrowdText;
 
   useEffect(() => {
-    if (requiresUpdate) editorText.insert(0, editorInitialText);
+    if (fetchFromDB) editorText.insert(0, editorInitialText);
+    // Setup the Ably provider at first render to prevent spawning connections.
     let ably = getAblyProvider(id);
-    window.javascript = javascript;
-    window.cpp = cpp;
-    window.html = html;
-    window.css = css;
-    window.json = json;
-    window.markdown = markdown;
-    window.rust = rust;
-    window.xml = xml;
-    window.java = java;
-    window.wast = wast;
-    window.php = php;
-    window.lezer = lezer;
-    window.python = python;
-    setEditorLanguage(Function("return " + editorInitialLanguage.toString())());
 
+    // Every x seconds, store the current text in a variable.
     const interval = setInterval(() => {
       setPrevText(editorText.toString());
     }, parseInt(process.env.NEXT_PUBLIC_UPDATE_INTERVAL));
+    // Clear the interval to prevent memory leaks and duplication.
     return () => clearInterval(interval);
   }, []);
 
   useEffect(() => {
+    // If the text changed, update the DB.
     updateDB({ name: id, text: editorText.toString() });
   }, [prevText]);
 
@@ -91,9 +71,7 @@ const Editor = ({
           name="languages"
           defaultValue={editorInitialLanguage}
           onChange={(e) => {
-            setEditorLanguage(
-              Function("return " + e.target.value.toString())()
-            );
+            setEditorLanguage(langs[e.target.value]);
             updateDB({
               name: id,
               language: e.target.value.toString(),
@@ -103,19 +81,9 @@ const Editor = ({
             color: "white",
           }}
         >
-          <option value="javascript()">Javascript</option>
-          <option value="cpp()">C++</option>
-          <option value="html()">HTML</option>
-          <option value="css()">CSS</option>
-          <option value="json()">JSON</option>
-          <option value="markdown()">Markdown</option>
-          <option value="rust()">Rust</option>
-          <option value="xml()">XML</option>
-          <option value="java()">Java</option>
-          <option value="wast()">Wast</option>
-          <option value="lezer()">Lezer</option>
-          <option value="python()">Python</option>
-          <option value="php()">PHP</option>
+          {langOptions.map((lang) => (
+            <option value={lang}>{lang}</option>
+          ))}
         </select>
       </div>
     </>
