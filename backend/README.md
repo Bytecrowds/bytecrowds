@@ -1,4 +1,6 @@
 # ENV specs
 
-- UPSTASH_REDIS_REST_URL => string
-- UPSTASH_REDIS_REST_TOKEN => string
+- BYTECROWDS_URL => string
+- BYTECROWDS_TOKEN => string
+- ANALYTICS_URL => string
+- ANALYTICS_TOKEN => string
