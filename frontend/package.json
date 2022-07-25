@@ -8,17 +8,17 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@chakra-ui/react": "^2.2.1",
-    "@codemirror/lang-cpp": "^6.0.0",
+    "@chakra-ui/react": "^2.2.4",
+    "@codemirror/lang-cpp": "^6.0.1",
     "@codemirror/lang-css": "^6.0.0",
-    "@codemirror/lang-html": "^6.0.0",
+    "@codemirror/lang-html": "^6.1.0",
     "@codemirror/lang-java": "^6.0.0",
-    "@codemirror/lang-javascript": "^6.0.0",
+    "@codemirror/lang-javascript": "^6.0.2",
     "@codemirror/lang-json": "^6.0.0",
     "@codemirror/lang-lezer": "^6.0.0",
     "@codemirror/lang-markdown": "^6.0.0",
     "@codemirror/lang-php": "^6.0.0",
-    "@codemirror/lang-python": "^6.0.0",
+    "@codemirror/lang-python": "^6.0.1",
     "@codemirror/lang-rust": "^6.0.0",
     "@codemirror/lang-sql": "^6.0.0",
     "@codemirror/lang-wast": "^6.0.0",
@@ -27,18 +27,18 @@
     "@emotion/styled": "^11.9.3",
     "@syncedstore/core": "^0.3.9",
     "@syncedstore/react": "^0.3.9",
-    "@uiw/react-codemirror": "^4.8.1",
+    "@uiw/react-codemirror": "^4.11.4",
     "ably": "^1.2.27",
-    "framer-motion": "^6.3.11",
-    "next": "^12.1.6",
+    "framer-motion": "^6.5.1",
+    "next": "^12.2.3",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "ws": "^8.8.0",
+    "ws": "^8.8.1",
     "y-codemirror.next": "^0.3.0",
     "yjs": "^13.5.39"
   },
   "devDependencies": {
-    "eslint": "8.17.0",
-    "eslint-config-next": "^12.1.6"
+    "eslint": "8.20.0",
+    "eslint-config-next": "^12.2.3"
   }
 }

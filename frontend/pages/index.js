@@ -34,7 +34,7 @@ const Home = () => {
         ></meta>
       </Head>
       <Flex>
-        <Button colorScheme="orange">
+        <Button color="brand">
           <NextLink href="/about" passHref>
             <Text fontSize="20px">
               <Link>about us</Link>
@@ -42,7 +42,7 @@ const Home = () => {
           </NextLink>
         </Button>
         <Spacer />
-        <Button colorScheme="orange">
+        <Button color="brand">
           <NextLink href="/contact" passHref>
             <Text fontSize="20px">
               <Link>contact</Link>
@@ -86,7 +86,7 @@ const Home = () => {
               }}
               fontSize="65px"
               fontWeight="600"
-              color="orange.200"
+              color="brand"
             >
               Bytecrowds
             </Text>
@@ -96,7 +96,7 @@ const Home = () => {
             currently in beta&quot;
           </Text>
           <Button
-            colorScheme="orange"
+            color="brand"
             marginTop="75px"
             width={{
               xl: "450px",
@@ -142,7 +142,7 @@ const Home = () => {
             by{" "}
             <Link
               href="https://www.linkedin.com/in/tudor-zg%C3%AEmb%C4%83u-a85274234/"
-              color="orange.200"
+              color="brand"
               isExternal
             >
               Tudor Zgîmbău

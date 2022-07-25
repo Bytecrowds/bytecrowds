@@ -1,5 +1,7 @@
 import Router from "@tsndr/cloudflare-worker-router";
 import { Redis } from "@upstash/redis/cloudflare";
+import { updateAllowedIPs, authByIP } from "./utils";
+const qr = require("qr-image");
 
 const router = new Router();
 
@@ -14,32 +16,116 @@ const analytics = new Redis({
   token: "ANALYTICS_TOKEN",
 });
 
-router.get("/bytecrowd/:bytecrowd", async ({ req, res }) => {
-  const bytecrowd = await bytecrowds.hgetall(req.params.bytecrowd);
+router.post("/bytecrowd/:bytecrowd", async ({ env, req, res }) => {
+  const key = req.headers.get("X-App-Key");
+  if (key !== env.APP_KEY) {
+    res.status = 401;
+    return;
+  }
 
-  if (bytecrowd !== null) res.body = bytecrowd;
-  else res.body = {};
+  const name = req.params.bytecrowd;
+  const authMethod = req.body.authMethod;
+
+  let bytecrowd = await bytecrowds.hgetall(name);
+
+  if (!bytecrowd) {
+    res.body = {};
+    return;
+  }
+
+  if (bytecrowd.requiresAuth) {
+    if (authMethod === "IP") {
+      if (!authByIP(bytecrowd, req)) {
+        bytecrowd["authFailed"] = true;
+        res.body = bytecrowd;
+        return;
+      }
+    } else {
+      // Auth by password.
+      const password = req.body.password;
+      if ((await env.BYTECROWDS.get(name)) !== password) {
+        res.body = { authFailed: true };
+        return;
+      }
+      const allowedIPs = updateAllowedIPs(bytecrowd, req);
+      await bytecrowds.hmset(name, {
+        allowedIPs: allowedIPs,
+      });
+    }
+  }
+  res.body = bytecrowd;
+});
+
+// Create or reset password.
+router.get("/auth/:bytecrowd", async ({ env, req, res }) => {
+  const name = req.params.bytecrowd;
+  const bytecrowd = await bytecrowds.hgetall(name);
+
+  if (!authByIP(bytecrowd, req)) {
+    res.status = 401;
+    return;
+  }
+
+  // Generate password.
+  let password = "";
+  const chars =
+    "0123456789abcdefghijklmnopqrstuvwxyz!@#$%^&*()ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  const random = new Uint32Array(chars.length);
+  crypto.getRandomValues(random);
+  for (let i = 0; i <= 20; i++) password += chars[random[i] % chars.length];
+
+  // Add the password to the KV bindings(encryption is used by default).
+  await env.BYTECROWDS.put(name, password);
+
+  const allowedIPs = updateAllowedIPs(bytecrowd, req);
+  await bytecrowds.hmset(name, {
+    allowedIPs: allowedIPs,
+    requiresAuth: true,
+  });
+
+  const qrCode = qr.imageSync(password);
+  res.body = qrCode.toString("base64");
 });
 
 router.post("/update", async ({ req, res }) => {
-  let name, text, language;
-  name = req.body.name;
-  text = req.body.text;
-  language = req.body.language;
+  const name = req.body.name;
+  let data = {
+    text: req.body.text,
+    language: req.body.language,
+  };
 
   const storedBytecrowd = await bytecrowds.hgetall(name);
+
+  // Only check IP because this route should be called only when updating from the app.
+  if (!authByIP(bytecrowds, req)) {
+    res.status = 401;
+    return;
+  }
+
   if (!storedBytecrowd)
     // If the bytecrowd doesn't exist, create it.
-    await bytecrowds.hmset(name, { text: text, language: "javascript" });
-  else if (
-    // If at least one element(text/language) changed , update the bytecrowd.
-    storedBytecrowd.text !== text ||
-    storedBytecrowd.language !== language
-  ) {
-    // If the request doesn't contain a new text/language, use the current one.
-    if (!text) text = storedBytecrowd.text;
-    if (!language) language = storedBytecrowd.language;
-    await bytecrowds.hmset(name, { text: text, language: language });
+    await bytecrowds.hmset(name, {
+      text: data.text,
+      language: "javascript",
+      requiresAuth: false,
+      allowedIPs: [],
+    });
+  else {
+    // Remove the authorization fields from comparison once authenticated.
+    delete storedBytecrowd.allowedIPs, storedBytecrowd.requiresAuth;
+    if (
+      // If at least one element changed, update the bytecrowd.
+      JSON.stringify(storedBytecrowd) != JSON.stringify(data)
+    ) {
+      // If the request doesn't contain a new value for a field, use the current one.
+      for (let field in data)
+        if (!data[field]) data[field] = storedBytecrowd[field];
+
+      await bytecrowds.hmset(name, {
+        text: data.text,
+        language: data.language,
+      });
+    }
   }
 });
 

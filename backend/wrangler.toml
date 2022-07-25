@@ -1,3 +1,8 @@
 name = "backend"
 main = "src/index.js"
 compatibility_date = "2022-07-08"
+node_compat = true
+
+kv_namespaces = [ 
+    { binding = "BYTECROWDS", id = "06916f6270124ae4841cd67bb498a12f", preview_id = "ff338ffbc06043498225589d1df41874"}
+]

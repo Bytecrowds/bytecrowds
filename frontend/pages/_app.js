@@ -1,6 +1,7 @@
 import "../styles/globals.css";
 import { ChakraProvider } from "@chakra-ui/react";
 import { useEffect } from "react";
+import theme from "../theme";
 
 function MyApp({ Component, pageProps }) {
   // Send the IP adress and current page to the analytics server.
@@ -24,7 +25,7 @@ function MyApp({ Component, pageProps }) {
   }, []);
 
   return (
-    <ChakraProvider>
+    <ChakraProvider theme={theme}>
       <Component {...pageProps} />
     </ChakraProvider>
   );

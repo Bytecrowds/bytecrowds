@@ -5,6 +5,11 @@ const config = {
   useSystemColorMode: false,
 };
 
-const theme = extendTheme({ config });
+const theme = extendTheme({
+  config,
+  colors: {
+    brand: "#18db87",
+  },
+});
 
 export default theme;

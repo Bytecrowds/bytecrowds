@@ -3,13 +3,17 @@ import { useSyncedStore } from "@syncedstore/react";
 import CodeMirror from "@uiw/react-codemirror";
 import { oneDark } from "@codemirror/theme-one-dark";
 
+import { useDisclosure } from "@chakra-ui/react";
+import Auth from "./auth";
+import SignUp from "./signUp";
+
 import { yCollab, yUndoManagerKeymap } from "y-codemirror.next";
 import { keymap } from "@codemirror/view";
 
 import store from "../realtime/store";
 import { getAblyProvider } from "../realtime/store";
 
-import updateDB from "../utils/updateDB";
+import { updateDB } from "../utils/db";
 import { langs, langOptions } from "../utils/language";
 
 const Editor = ({
@@ -17,7 +21,21 @@ const Editor = ({
   editorInitialText,
   editorInitialLanguage,
   fetchFromDB,
+  requiresAuth,
 }) => {
+  // Controls the auth modal.
+  const _disclosure = useDisclosure({
+    defaultIsOpen: requiresAuth,
+  });
+  const isAuthOpen = _disclosure.isOpen;
+  const onAuthClose = _disclosure.onClose;
+
+  // Controls the sign up modal.
+  const __disclosure = useDisclosure();
+  const onSignUpOpen = __disclosure.onOpen;
+  const isSignUpOpen = __disclosure.isOpen;
+  const onSignUpClose = __disclosure.onClose;
+
   const [editorLanguage, setEditorLanguage] = useState(
     langs[editorInitialLanguage]
   );
@@ -25,6 +43,8 @@ const Editor = ({
   const editorText = useSyncedStore(store).bytecrowdText;
 
   useEffect(() => {
+    // If the bytecrowd requires auth and the user is not logged in, open the modal.
+
     if (fetchFromDB) editorText.insert(0, editorInitialText);
     // Setup the Ably provider at first render to prevent spawning connections.
     let ably = getAblyProvider(id);
@@ -44,15 +64,20 @@ const Editor = ({
 
   return (
     <>
-      <CodeMirror
-        value={editorText.toString()}
-        theme={oneDark}
-        extensions={[
-          keymap.of([...yUndoManagerKeymap]),
-          editorLanguage,
-          yCollab(editorText),
-        ]}
-      />
+      <Auth isOpen={isAuthOpen} onClose={onAuthClose} id={id} />
+      <SignUp isOpen={isSignUpOpen} onClose={onSignUpClose} id={id} />
+      {!isAuthOpen && (
+        <CodeMirror
+          value={editorText.toString()}
+          theme={oneDark}
+          extensions={[
+            keymap.of([...yUndoManagerKeymap]),
+            editorLanguage,
+            yCollab(editorText),
+          ]}
+        />
+      )}
+
       <div
         style={{
           position: "fixed",
@@ -82,9 +107,23 @@ const Editor = ({
           }}
         >
           {langOptions.map((lang) => (
-            <option value={lang}>{lang}</option>
+            <option key={lang} value={lang}>
+              {lang}
+            </option>
           ))}
         </select>
+        {!requiresAuth && (
+          <button
+            style={{
+              marginLeft: "15px",
+              color: "white",
+              backgroundColor: "black",
+            }}
+            onClick={onSignUpOpen}
+          >
+            set auth
+          </button>
+        )}
       </div>
     </>
   );
