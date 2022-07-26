@@ -72,8 +72,8 @@ The bytecrowds's passwords are stored using cloudflare workers KV which are encr
   * [y.js-codemirror](https://github.com/yjs/y-codemirror) : y.js codemirror adapter
   
 ## Serverless Backend
-  * we are using a custom [Ably](https://ably.com/) provider for syncing the clients 
-  * [cloudflare-workers](https://workers.cloudflare.com/) for interacting with the database 
+  * we are using a custom [Ably](https://ably.com/) provider for syncing the clients ( thanks to the Ably team for helping with the provider )
+  * [cloudflare-workers](https://workers.cloudflare.com/) for interacting with the database and [tsndr's router](https://github.com/tsndr/cloudflare-worker-router) for routing
   * [upstash](https://upstash.com/) for persisting the data to redis
   
 ##  How it works?
