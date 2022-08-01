@@ -1,6 +1,3 @@
-# IMPORTANT!
-This is a unified repository created solely for the purpose of participating in infoeducatie contest and is updated regularly. To see the most recent, timelined version check the [frontend](https://github.com/Bytecrowds/frontend) and [backend](https://github.com/Bytecrowds/backend) repositories.
-
 # Description
 > What's Bytecrowds?
 
@@ -78,4 +75,10 @@ The bytecrowds's passwords are stored using cloudflare workers KV which are encr
   
 ##  How it works?
   We use the y.js-codemirror bindings on react-codemirror and connect the editor to the global SyncedStore object, together with the Ably provider. The infrastructure can auto-scale to any number of users.
+  
+# IMPORTANT!
+This is a unified repository and is updated regularly, if needed. To see the timelined version check the [frontend](https://github.com/Bytecrowds/frontend) and [backend](https://github.com/Bytecrowds/backend) repositories.
+
+# Distinctions
+- 1st place at [infoeducatie](https://infoeducatie.ro/) 2022, web section
   
