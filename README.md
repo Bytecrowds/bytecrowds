@@ -57,7 +57,7 @@ The bytecrowds's passwords are stored using cloudflare workers KV which are encr
   - Git clone the [frontend](https://github.com/Bytecrowds/frontend) and [backend](https://github.com/Bytecrowds/backend) repositories
   - Create the .env files and set the variables accordingly
   - (optional) Install [wrangler](https://github.com/cloudflare/wrangler2) and deploy a local version of the workers
-  - IMPORTANT! Because of an underlying [issue](https://github.com/YousefED/reactive/issues/8) on [reactive](https://github.com/YousefED/reactive), the react dependecy of the library needs to be manually deleted
+  - IMPORTANT! IP authentication only works locally because vercel lacks support for IPv6 addresses
 
 
 # Tech stack
