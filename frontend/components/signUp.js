@@ -13,7 +13,9 @@ const SignUp = ({ isOpen, onClose, id }) => {
 
   useEffect(() => {
     const fetchPassword = async () => {
-      const _res = await fetch(process.env.NEXT_PUBLIC_BACKEND + "/auth/" + id);
+      const _res = await fetch(
+        process.env.NEXT_PUBLIC_BACKEND + "/generate/" + id
+      );
       setPasswordImage("data:image/png;base64," + (await _res.text()));
     };
 
@@ -31,8 +33,8 @@ const SignUp = ({ isOpen, onClose, id }) => {
       <ModalOverlay backdropFilter="auto" backdropBlur="5px" />
       <ModalContent>
         <ModalHeader>Scan and copy the generated password</ModalHeader>
-        <ModalBody justifyContent="center">
-          <img src={passwordImage} />
+        <ModalBody>
+          <img style={{ marginLeft: "100px" }} src={passwordImage} />
         </ModalBody>
         <ModalFooter justifyContent="center">
           <div>WARNING! You will only see this once</div>

@@ -17,12 +17,6 @@ const analytics = new Redis({
 });
 
 router.post("/bytecrowd/:bytecrowd", async ({ env, req, res }) => {
-  const key = req.headers.get("X-App-Key");
-  if (key !== env.APP_KEY) {
-    res.status = 401;
-    return;
-  }
-
   const name = req.params.bytecrowd;
   const authMethod = req.body.authMethod;
 
@@ -35,6 +29,12 @@ router.post("/bytecrowd/:bytecrowd", async ({ env, req, res }) => {
 
   if (bytecrowd.requiresAuth) {
     if (authMethod === "IP") {
+      // Check if the request didn't come from an external client.
+      const key = req.headers.get("X-App-Key");
+      if (key !== env.APP_KEY) {
+        res.status = 401;
+        return;
+      }
       if (!authByIP(bytecrowd, req)) {
         bytecrowd["authFailed"] = true;
         res.body = bytecrowd;
@@ -57,7 +57,7 @@ router.post("/bytecrowd/:bytecrowd", async ({ env, req, res }) => {
 });
 
 // Create or reset password.
-router.get("/auth/:bytecrowd", async ({ env, req, res }) => {
+router.get("/generate/:bytecrowd", async ({ env, req, res }) => {
   const name = req.params.bytecrowd;
   const bytecrowd = await bytecrowds.hgetall(name);
 

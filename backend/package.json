@@ -2,7 +2,7 @@
   "name": "database-server",
   "version": "0.0.0",
   "devDependencies": {
-    "wrangler": "^2.0.22"
+    "wrangler": "^2.0.24"
   },
   "private": true,
   "scripts": {

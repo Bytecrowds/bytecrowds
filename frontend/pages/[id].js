@@ -11,9 +11,13 @@ const Editor = dynamic(() => import("../components/editor"), {
 export async function getServerSideProps(context) {
   const { id } = context.query;
 
-  const bytecrowd = await getBytecrowd(id, {
-    authMethod: "IP",
-  });
+  const bytecrowd = await getBytecrowd(
+    id,
+    {
+      authMethod: "IP",
+    },
+    context.req.headers["x-forwarded-for"]
+  );
 
   // If the bytecrowd doesn't exist, use the default values.
   let editorInitialText = bytecrowd.text || "";

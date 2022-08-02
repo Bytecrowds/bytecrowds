@@ -1,17 +1,28 @@
 import Head from "next/head";
 import NextLink from "next/link";
-import { useState } from "react";
-import { useEffect } from "react";
-import { Flex } from "@chakra-ui/react";
-import { Link } from "@chakra-ui/react";
-import { Spacer } from "@chakra-ui/react";
-import { Text } from "@chakra-ui/react";
-import { Button } from "@chakra-ui/react";
+import { useState, useEffect } from "react";
+import {
+  Flex,
+  Link,
+  Spacer,
+  Text,
+  Button,
+  useDisclosure,
+  Modal,
+  ModalContent,
+  ModalOverlay,
+  ModalBody,
+  ModalHeader,
+  ModalFooter,
+  ModalCloseButton,
+} from "@chakra-ui/react";
 
 const Home = () => {
   const [randomLink, setRandomLink] = useState("/snippetzone");
   // Set this to true when the hydration finished.
   const [isMounted, setIsMounted] = useState(false);
+
+  const { isOpen, onClose } = useDisclosure({ defaultIsOpen: true });
 
   useEffect(() => {
     setRandomLink(
@@ -33,6 +44,27 @@ const Home = () => {
           content="width=device-width, initial-scale=1"
         ></meta>
       </Head>
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Please read!</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <Text>
+              This website loggs essential analytics data such as IP addresses
+              and pages data. The data is NOT selled or used for
+              indentification. To request the deletion of your data mail me at
+              tudor.zgimbau@gmail.com
+            </Text>
+          </ModalBody>
+          <ModalFooter>
+            <Text>
+              P.S.: The IP authentication does not currently work because vercel
+              lacks IPv6 support
+            </Text>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
       <Flex>
         <Button color="brand">
           <NextLink href="/about" passHref>

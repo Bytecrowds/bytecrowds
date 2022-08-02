@@ -9,7 +9,9 @@ export const updateAllowedIPs = (bytecrowd, req) => {
 export const authByIP = (bytecrowd, req) => {
   if (
     bytecrowd.requiresAuth &&
-    !bytecrowd.allowedIPs.includes(req.headers.get("CF-Connecting-IP"))
+    !bytecrowd.allowedIPs.includes(req.headers.get("CF-Connecting-IP")) &&
+    // We will treat the vercel function that handles frontend's SSR as a proxy
+    !bytecrowd.allowedIPs.includes(req.headers.get("X-Forwared-For"))
   )
     return false;
   return true;

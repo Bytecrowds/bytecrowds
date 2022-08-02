@@ -7,11 +7,14 @@ function MyApp({ Component, pageProps }) {
   // Send the IP adress and current page to the analytics server.
   useEffect(() => {
     async function fetchAnalytics() {
-      /* 
-        Keep it local since we currently have trouble hosting.
-        Ex: http://localhost:xxxx/abcd => abcd .
-      */
-      let page = document.URL.substring(22);
+      let page;
+      let environment = process.env.NEXT_PUBLIC_ENVIRONMENT;
+      if (environment === "development")
+        // http://localhost:xxxx/abc => abc .
+        page = document.URL.substring(22);
+      else if (environment === "production")
+        // https://www.bytecrowds.com/abc => abc .
+        page = document.URL.substring(27);
       if (page === "") page = "index";
       await fetch(process.env.NEXT_PUBLIC_BACKEND + "/analytics", {
         method: "POST",

@@ -25,7 +25,6 @@ const Editor = ({
 }) => {
   // Controls the auth modal.
   const _disclosure = useDisclosure({
-    // If the bytecrowd requires auth and the user is not logged in, open the modal.
     defaultIsOpen: requiresAuth,
   });
   const isAuthOpen = _disclosure.isOpen;
@@ -44,6 +43,8 @@ const Editor = ({
   const editorText = useSyncedStore(store).bytecrowdText;
 
   useEffect(() => {
+    // If the bytecrowd requires auth and the user is not logged in, open the modal.
+
     if (fetchFromDB) editorText.insert(0, editorInitialText);
     // Setup the Ably provider at first render to prevent spawning connections.
     let ably = getAblyProvider(id);
