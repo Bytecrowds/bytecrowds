@@ -8,15 +8,13 @@ router.cors();
 
 // Because cloudflare workers expose the env on fetch, we need to manually set the vars.
 const bytecrowds = new Redis({
-  url: "https://eu2-on-koala-30471.upstash.io",
-  token:
-    "AXcHASQgZDdmMTRjZjMtNTI1Ni00ZDhjLTk3MjgtMGJhZDk2NWFmYzcwODJmNzNmNmI4YzdkNDhkZDg1YWM3NzY4NWZkZDRmYWE=",
+  url: "BYTECROWDS_URL",
+  token: "BYTECROWDS_TOKEN",
 });
 
 const analytics = new Redis({
-  url: "https://eu2-joint-crab-30363.upstash.io",
-  token:
-    "AXabASQgZjExNWFmZjMtNDg3Yy00ZDE4LWJkMjQtYzZjMTcxNmE0NTg0MzJhYzk2NzQ5MDYzNDAzYzk3NmNlZGM2MTU4ODJmMTE=",
+  url: "BYTECROWDS_URL",
+  token: "BYTECROWDS_TOKEN",
 });
 
 router.post("/bytecrowd/:bytecrowd", async ({ env, req, res }) => {

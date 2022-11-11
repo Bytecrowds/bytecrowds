@@ -23,7 +23,6 @@ const Editor = ({
   fetchFromDB,
   requiresAuth,
 }) => {
-  console.log(requiresAuth);
   // Controls the auth modal.
   const { isOpen: isAuthOpen, onClose: onAuthClose } = useDisclosure({
     defaultIsOpen: requiresAuth,
