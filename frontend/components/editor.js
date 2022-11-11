@@ -23,18 +23,18 @@ const Editor = ({
   fetchFromDB,
   requiresAuth,
 }) => {
+  console.log(requiresAuth);
   // Controls the auth modal.
-  const _disclosure = useDisclosure({
+  const { isOpen: isAuthOpen, onClose: onAuthClose } = useDisclosure({
     defaultIsOpen: requiresAuth,
   });
-  const isAuthOpen = _disclosure.isOpen;
-  const onAuthClose = _disclosure.onClose;
 
   // Controls the sign up modal.
-  const __disclosure = useDisclosure();
-  const onSignUpOpen = __disclosure.onOpen;
-  const isSignUpOpen = __disclosure.isOpen;
-  const onSignUpClose = __disclosure.onClose;
+  const {
+    isOpen: isSignUpOpen,
+    onOpen: onSignUpOpen,
+    onClose: onSignUpClose,
+  } = useDisclosure();
 
   const [editorLanguage, setEditorLanguage] = useState(
     langs[editorInitialLanguage]

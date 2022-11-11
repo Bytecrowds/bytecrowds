@@ -14,24 +14,27 @@ export default class AblyProvider {
      */
     this.clientId = this.doc.clientID.toString();
 
-    this.channel.subscribe(this.handleMessage.bind(this));
-    // Mark the client as online.
-    this.channel.presence.enter();
-
     this.doc.on("update", this.handleUpdate.bind(this));
-
-    const state = Y.encodeStateVector(this.doc);
-    this.channel.publish("syncStep1", state);
   }
 
-  handleMessage(msg) {
+  async initialize() {
+    await this.channel.subscribe(this.handleMessage.bind(this));
+
+    // Mark the client as online.
+    await this.channel.presence.enter();
+
+    const state = Y.encodeStateVector(this.doc);
+    await this.channel.publish("syncStep1", state);
+  }
+
+  async handleMessage(msg) {
     // Prevent glitches when starting Ably's service.
     if (msg.clientId === this.clientId) return;
 
     switch (msg.name) {
       case "syncStep1":
         const reply = Y.encodeStateAsUpdate(this.doc, new Uint8Array(msg.data));
-        this.channel.publish("syncStep2", reply);
+        await this.channel.publish("syncStep2", reply);
         break;
       case "syncStep2":
         Y.applyUpdate(this.doc, new Uint8Array(msg.data), this);
@@ -45,9 +48,9 @@ export default class AblyProvider {
     }
   }
 
-  handleUpdate(update, origin) {
+  async handleUpdate(update, origin) {
     if (origin !== this) {
-      this.channel.publish("update", update);
+      await this.channel.publish("update", update);
     }
   }
 }

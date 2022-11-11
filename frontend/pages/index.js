@@ -22,7 +22,7 @@ const Home = () => {
   // Set this to true when the hydration finished.
   const [isMounted, setIsMounted] = useState(false);
 
-  const { isOpen, onClose } = useDisclosure({ defaultIsOpen: true });
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   useEffect(() => {
     setRandomLink(
@@ -33,6 +33,7 @@ const Home = () => {
           .substring(0, 7)
     );
     setIsMounted(true);
+    if (localStorage.getItem("modalShown") !== "true") onOpen();
   }, []);
 
   return (
@@ -44,7 +45,13 @@ const Home = () => {
           content="width=device-width, initial-scale=1"
         ></meta>
       </Head>
-      <Modal isOpen={isOpen} onClose={onClose}>
+      <Modal
+        isOpen={isOpen}
+        onClose={() => {
+          localStorage.setItem("modalShown", "true");
+          onClose();
+        }}
+      >
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>Please read!</ModalHeader>
@@ -54,7 +61,8 @@ const Home = () => {
               This website loggs essential analytics data such as IP addresses
               and pages data. The data is NOT selled or used for
               indentification. To request the deletion of your data mail me at
-              tudor.zgimbau@gmail.com
+              tudor.zgimbau@gmail.com. This pop-up should appear only once per
+              browser.
             </Text>
           </ModalBody>
           <ModalFooter>
@@ -66,21 +74,21 @@ const Home = () => {
         </ModalContent>
       </Modal>
       <Flex>
-        <Button color="brand">
-          <NextLink href="/about" passHref>
+        <NextLink href="/about" legacyBehavior passHref>
+          <Button color="brand">
             <Text fontSize="20px">
               <Link>about us</Link>
             </Text>
-          </NextLink>
-        </Button>
+          </Button>
+        </NextLink>
         <Spacer />
-        <Button color="brand">
-          <NextLink href="/contact" passHref>
+        <NextLink href="/contact" legacyBehavior passHref>
+          <Button color="brand">
             <Text fontSize="20px">
               <Link>contact</Link>
             </Text>
-          </NextLink>
-        </Button>
+          </Button>
+        </NextLink>
       </Flex>
       <Flex
         flexDirection="column"

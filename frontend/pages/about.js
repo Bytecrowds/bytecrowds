@@ -19,7 +19,7 @@ const About = () => {
       <Text fontSize="30px">
         Currently the site is operated solely by me, Tudor Zgimbau. Find more in
         the{" "}
-        <NextLink href="/contact" passHref>
+        <NextLink href="/contact" legacyBehavior passHref>
           <Link color="brand">contact</Link>
         </NextLink>{" "}
         section{" "}

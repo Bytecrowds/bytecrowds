@@ -1,19 +1,22 @@
-import Router from "@tsndr/cloudflare-worker-router";
+import { Router } from "@tsndr/cloudflare-worker-router";
 import { Redis } from "@upstash/redis/cloudflare";
 import { updateAllowedIPs, authByIP } from "./utils";
 const qr = require("qr-image");
 
 const router = new Router();
+router.cors();
 
 // Because cloudflare workers expose the env on fetch, we need to manually set the vars.
 const bytecrowds = new Redis({
-  url: "BYTECROWDS_URL",
-  token: "BYTECROWDS_TOKEN",
+  url: "https://eu2-on-koala-30471.upstash.io",
+  token:
+    "AXcHASQgZDdmMTRjZjMtNTI1Ni00ZDhjLTk3MjgtMGJhZDk2NWFmYzcwODJmNzNmNmI4YzdkNDhkZDg1YWM3NzY4NWZkZDRmYWE=",
 });
 
 const analytics = new Redis({
-  url: "ANALYTICS_URL",
-  token: "ANALYTICS_TOKEN",
+  url: "https://eu2-joint-crab-30363.upstash.io",
+  token:
+    "AXabASQgZjExNWFmZjMtNDg3Yy00ZDE4LWJkMjQtYzZjMTcxNmE0NTg0MzJhYzk2NzQ5MDYzNDAzYzk3NmNlZGM2MTU4ODJmMTE=",
 });
 
 router.post("/bytecrowd/:bytecrowd", async ({ env, req, res }) => {
