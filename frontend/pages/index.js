@@ -13,14 +13,11 @@ import {
   ModalOverlay,
   ModalBody,
   ModalHeader,
-  ModalFooter,
   ModalCloseButton,
 } from "@chakra-ui/react";
 
 const Home = () => {
   const [randomLink, setRandomLink] = useState("/snippetzone");
-  // Set this to true when the hydration finished.
-  const [isMounted, setIsMounted] = useState(false);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -32,7 +29,6 @@ const Home = () => {
           .replace(/[^a-z]+/g, "")
           .substring(0, 7)
     );
-    setIsMounted(true);
     if (localStorage.getItem("modalShown") !== "true") onOpen();
   }, []);
 
@@ -65,12 +61,6 @@ const Home = () => {
               browser.
             </Text>
           </ModalBody>
-          <ModalFooter>
-            <Text>
-              P.S.: The IP authentication does not currently work because vercel
-              lacks IPv6 support
-            </Text>
-          </ModalFooter>
         </ModalContent>
       </Modal>
       <Flex>
@@ -136,6 +126,10 @@ const Home = () => {
             currently in beta&quot;
           </Text>
           <Button
+            // Use this instead of link to prevent caching
+            onClick={() => {
+              location.href = randomLink;
+            }}
             color="brand"
             marginTop="75px"
             width={{
@@ -146,10 +140,6 @@ const Home = () => {
             height="90px"
             fontSize="30px"
             fontWeight="600"
-            onClick={() =>
-              // We don't have acces to window.location on the server.
-              isMounted ? (location.href = randomLink) : undefined
-            }
           >
             new bytecrowd
           </Button>

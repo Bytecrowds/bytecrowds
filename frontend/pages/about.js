@@ -9,9 +9,8 @@ const About = () => {
         What is Bytecrowds?
       </Text>
       <Text fontSize="30px">
-        Bytecrowds.com is a quick & reliable tool that allows you to share code
-        in real-time with your peers, offering a simple interface and code
-        editor that supports multiple languages.
+        Bytecrowds is an easy to use serverless code sharing platform with
+        minimalist design.
       </Text>
       <Text marginTop="120px" fontSize="6xl" color="brand">
         Who&apos;s in charge of the project?

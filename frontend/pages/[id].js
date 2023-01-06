@@ -1,51 +1,75 @@
 import { useRouter } from "next/router";
-
-import { getBytecrowd } from "../utils/db";
+import { unstable_getServerSession } from "next-auth";
+import isAuthorized from "../utils/authorization";
+import { authOptions } from "./api/auth/[...nextauth]";
+import redis from "../database/redis";
 
 import dynamic from "next/dynamic";
+import AuthorizationError from "../components/error/authorization";
 // Import the Editor client-side only to avoid initializing providers multiple times.
 const Editor = dynamic(() => import("../components/editor"), {
   ssr: false,
 });
 
 export async function getServerSideProps(context) {
-  const { id } = context.query;
-
-  const bytecrowd = await getBytecrowd(
-    id,
-    {
-      authMethod: "IP",
-    },
-    context.req.headers["x-forwarded-for"]
+  const session = await unstable_getServerSession(
+    context.req,
+    context.res,
+    authOptions
   );
 
-  // If the bytecrowd doesn't exist, use the default values.
-  let editorInitialText = bytecrowd.text || "";
-  let editorInitialLanguage = bytecrowd.language || "javascript";
+  // Check if the user is logged in.
+  if (session) {
+    const { id } = context.query;
+    const bytecrowd = await redis.hgetall("bytecrowd:" + id);
 
-  let requiresAuth = false;
-  if (bytecrowd.authFailed) requiresAuth = true;
-
-  let fetchFromDB = false;
-  let _res = await fetch("https://rest.ably.io/channels/" + id + "/presence", {
-    headers: {
-      Authorization:
-        "Basic " +
-        Buffer.from(process.env.NEXT_PUBLIC_ABLY_API_KEY).toString("base64"),
-    },
-  });
-  /*
+    let _res = await fetch(
+      "https://rest.ably.io/channels/" + id + "/presence",
+      {
+        headers: {
+          Authorization:
+            "Basic " + Buffer.from(process.env.ABLY_API_KEY).toString("base64"),
+        },
+      }
+    );
+    /*
     If there are no other connected peers, the document will be fetched from the DB.
     Otherwise, fetch the document from peers.
    */
-  if ((await _res.json()).length == 0) fetchFromDB = true;
+    const fetchFromDB = (await _res.json()).length === 0;
+
+    //  If the bytecrowd doesn't exist, return the default values.
+    if (!bytecrowd)
+      return {
+        props: {
+          editorInitialText: "",
+          editorInitialLanguage: "javascript",
+          fetchFromDB: fetchFromDB,
+          login: "successful",
+        },
+      };
+
+    // Checked if the user is authorized.
+    if (!isAuthorized(bytecrowd.authorizedEmails, session))
+      return {
+        props: {
+          login: "failed",
+        },
+      };
+
+    return {
+      props: {
+        editorInitialText: bytecrowd.text,
+        editorInitialLanguage: bytecrowd.language,
+        fetchFromDB: fetchFromDB,
+        login: "successful",
+      },
+    };
+  }
 
   return {
     props: {
-      editorInitialText,
-      editorInitialLanguage,
-      fetchFromDB,
-      requiresAuth,
+      login: "failed",
     },
   };
 }
@@ -54,21 +78,22 @@ const Bytecrowd = ({
   editorInitialText,
   editorInitialLanguage,
   fetchFromDB,
-  requiresAuth,
+  login,
 }) => {
   const { id } = useRouter().query;
 
-  return (
-    <>
-      <Editor
-        id={id}
-        editorInitialText={editorInitialText}
-        editorInitialLanguage={editorInitialLanguage}
-        fetchFromDB={fetchFromDB}
-        requiresAuth={requiresAuth}
-      ></Editor>
-    </>
-  );
+  if (login === "failed") return <AuthorizationError />;
+  else if (login === "successful")
+    return (
+      <>
+        <Editor
+          id={id}
+          editorInitialText={editorInitialText}
+          editorInitialLanguage={editorInitialLanguage}
+          fetchFromDB={fetchFromDB}
+        ></Editor>
+      </>
+    );
 };
 
 export default Bytecrowd;
