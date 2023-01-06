@@ -60,7 +60,7 @@ We're using [auth.js](https://authjs.dev) for authentication. In addition to tha
 
 ## Frontend
 
-- [next](https://nextjs.org/) : the main frontend framework, allows combined SSG and CSR for better performance
+- [Next](https://nextjs.org/) : the main frontend framework, allows combined SSG and CSR for better performance
 - [SyncedStore](https://syncedstore.org/docs/) : [y.js](https://docs.yjs.dev/) react and [reactive](https://github.com/yousefed/reactive) framework
 - [react-codemirror](https://uiwjs.github.io/react-codemirror/) : [codemirror-6](https://codemirror.net/6/) react implementation
 - [y.js-codemirror](https://github.com/yjs/y-codemirror) : y.js codemirror adapter
@@ -68,9 +68,9 @@ We're using [auth.js](https://authjs.dev) for authentication. In addition to tha
 ## Serverless Backend
 
 - we are using a custom [Ably](https://ably.com/) provider for syncing the clients ( thanks to the Ably team for helping with the provider )
-- [vercel functions](https://vercel.com/docs/concepts/functions/serverless-functions) for interacting with the database
-- [cloudflare workers](https://workers.cloudflare.com/) for the analytics engine
-- [upstash](https://upstash.com/) as the serverless redis provider
+- [Vercel functions](https://vercel.com/docs/concepts/functions/serverless-functions) for interacting with the database
+- [Cloudflare workers](https://workers.cloudflare.com/) for the analytics engine
+- [Upstash](https://upstash.com/) as the serverless redis provider
 
 ## How it works?
 
