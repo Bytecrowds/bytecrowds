@@ -78,7 +78,7 @@ We use the y.js-codemirror bindings on react-codemirror and connect the editor t
 
 # IMPORTANT!
 
-This is a unified repository and is updated regularly, if needed. To see the timelined version check the [frontend](https://github.com/Bytecrowds/frontend) and [analytics](https://github.com/Bytecrowds/analytics) repositories.
+This is a unified repository and is updated regularly, if needed. To see the timelined version check the [main](https://github.com/Bytecrowds/main) and [analytics](https://github.com/Bytecrowds/analytics) repositories.
 
 # Distinctions
 
