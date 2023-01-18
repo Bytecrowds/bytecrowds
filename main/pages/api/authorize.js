@@ -1,14 +1,8 @@
 import redis from "../../database/redis";
-import { unstable_getServerSession } from "next-auth";
-import { authOptions } from "./auth/[...nextauth]";
 import { failAuthorization } from "../../utils/authorization";
 import success from "../../utils/approve";
 
 export default async (req, res) => {
-  const session = await unstable_getServerSession(req, res, authOptions);
-
-  if (!session) return failAuthorization("login", res);
-
   const { name } = req.body;
 
   if (await redis.hget("bytecrowd:" + name, "authorizedEmails"))

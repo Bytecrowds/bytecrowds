@@ -1,31 +1,33 @@
 import { Text } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { Link } from "@chakra-ui/react";
+import StyledText from "../components/styled/text";
 
+// 3.75rem = 6xl default in Chakra UI.
 const About = () => {
   return (
     <>
-      <Text marginTop="30px" fontSize="6xl" color="brand">
+      <StyledText styling={{ marginTop: "30px", fontSize: "3.75rem" }}>
         What is Bytecrowds?
-      </Text>
+      </StyledText>
       <Text fontSize="30px">
         Bytecrowds is an easy to use serverless code sharing platform with
         minimalist design.
       </Text>
-      <Text marginTop="120px" fontSize="6xl" color="brand">
+      <StyledText styling={{ marginTop: "120px", fontSize: "3.75rem" }}>
         Who&apos;s in charge of the project?
-      </Text>
+      </StyledText>
       <Text fontSize="30px">
         Currently the site is operated solely by me, Tudor Zgimbau. Find more in
         the{" "}
         <NextLink href="/contact" legacyBehavior passHref>
-          <Link color="brand">contact</Link>
+          <Link background="brand">contact</Link>
         </NextLink>{" "}
         section{" "}
       </Text>
-      <Text marginTop="120px" fontSize="6xl" color="brand">
+      <StyledText styling={{ marginTop: "120px", fontSize: "3.75rem" }}>
         Is this a commercial project?
-      </Text>
+      </StyledText>
       <Text fontSize="30px">
         No, at least for now. This is a hobby project of mine that I will try to
         keep as updated as possible and maybe monetize through ads.

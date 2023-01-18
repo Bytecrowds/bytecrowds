@@ -1,5 +1,5 @@
 export default function isAuthorized(authorizedEmails, session) {
-  return !authorizedEmails || authorizedEmails.includes(session.user.email);
+  return !authorizedEmails || authorizedEmails.includes(session?.user.email);
 }
 
 export const failAuthorization = (reason, res) => {

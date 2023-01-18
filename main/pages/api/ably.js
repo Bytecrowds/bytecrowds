@@ -9,8 +9,6 @@ const Ably = require("ably");
 export default async (req, res) => {
   const session = await unstable_getServerSession(req, res, authOptions);
 
-  if (!session) return failAuthorization("login", res);
-
   const { channel } = req.body;
 
   const authorizedEmails = await redis.hget(

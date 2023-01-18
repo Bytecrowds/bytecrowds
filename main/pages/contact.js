@@ -12,7 +12,11 @@ const Contact = () => {
         fontSize="30px"
       >
         For any inquiry or feedback contact me at{" "}
-        <Link isExternal href="mailto:tudor.zgimbau@gmail.com" color="brand">
+        <Link
+          isExternal
+          href="mailto:tudor.zgimbau@gmail.com"
+          background="brand"
+        >
           {" "}
           tudor.zgimbau@gmail.com{" "}
         </Link>
@@ -20,7 +24,7 @@ const Contact = () => {
         <Link
           isExternal
           href="https://www.linkedin.com/in/tudor-zg%C3%AEmb%C4%83u-a85274234/"
-          color="brand"
+          background="brand"
         >
           Linkedin
         </Link>

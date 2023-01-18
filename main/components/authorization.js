@@ -10,6 +10,7 @@ import {
 } from "@chakra-ui/react";
 import { useRef } from "react";
 import { authorize } from "../utils/authorization";
+import StyledText from "./styled/text";
 
 const AuthorizationModal = ({ isOpen, onClose, id }) => {
   const inputRef = useRef(null);
@@ -45,12 +46,17 @@ const AuthorizationModal = ({ isOpen, onClose, id }) => {
           <Input
             ref={inputRef}
             placeholder="email addresses"
-            _placeholder={{ opacity: 2, color: "brand" }}
+            _placeholder={{
+              opacity: 2,
+              background: "brand",
+              backgroundClip: "text",
+              fill: "transparent",
+            }}
           />
         </ModalBody>
         <ModalFooter justifyContent="center">
-          <Button color="brand" onClick={submit}>
-            submit
+          <Button onClick={submit}>
+            <StyledText>submit</StyledText>
           </Button>
         </ModalFooter>
       </ModalContent>
