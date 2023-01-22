@@ -1,0 +1,6 @@
+[submodule "main"]
+	path = main
+	url = https://github.com/Bytecrowds/main
+[submodule "analytics"]
+	path = analytics
+	url = https://github.com/Bytecrowds/analytics
