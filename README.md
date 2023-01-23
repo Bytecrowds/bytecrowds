@@ -9,7 +9,7 @@ Many thanks to the Upstash team for allowing this project to run on their server
 <tr>
 <td>
   <img width="1000" height="0">
-  <a href="https://upstash.com/?utm_source=YOUR_PROJECT" >
+  <a href="https://upstash.com/?utm_source=Bytecrowds" >
   <img src="https://raw.githubusercontent.com/upstash/sponsorship/master/redis.png" alt="Upstash" width="260" align="right">
   </a>
 <h3>Upstash: Serverless Database for Redis</h3>
