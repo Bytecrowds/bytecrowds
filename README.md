@@ -1,4 +1,6 @@
-![logo](./assets/logo.png)
+<p align="center">
+<img src="./assets/logo.png" height="100">
+</p>
 
 # Sponsors
 
