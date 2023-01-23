@@ -1,3 +1,27 @@
+![logo](./assets/logo.png)
+
+# Sponsors
+
+Many thanks to the Upstash team for allowing this project to run on their serverless Redis infrastructure.
+
+<tr>
+<td>
+  <img width="1000" height="0">
+  <a href="https://upstash.com/?utm_source=YOUR_PROJECT" >
+  <img src="https://raw.githubusercontent.com/upstash/sponsorship/master/redis.png" alt="Upstash" width="260" align="right">
+  </a>
+<h3>Upstash: Serverless Database for Redis</h3>
+
+  <ul>
+    <li>Serverless Redis with global replication and durable storage</li>
+    <li>Price scales to zero with per request pricing</li>
+    <li>Built-in REST API designed for serverless and edge functions</li>
+  </ul>
+  
+[Start for free in 30 seconds!](https://upstash.com/?utm_source=Bytecrowds)
+</td>
+</tr>
+
 # Description
 
 > What's Bytecrowds?
@@ -6,41 +30,36 @@ Bytecrowds is a simple and reliable serverless code sharing platform, which goal
 
 > How does it differ from other code sharing platforms?
 
-The infrastructure we use relies on serverless functions to maximize the reability of the app, making requests on edge and auto-scaling
+The infrastructure we use relies on serverless functions to maximize the reliability of the app, making requests on edge and auto-scaling
 
 > Why serverless?
 
 Serverless allows us to focus on code rather than infrastructure operations, which can cause a lot of problems when you need maximum stability and scaling.
 
-> Isn't serverless emptying pockets with that many requests/second?
+# Flow
 
-The short answer would be no. We use [Ably](https://ably.com/) to sync the peers which is a serverless solution created specially for real-time services.
-Also, although we are sending a large number of requests to workers and DB, we also don't have any concerns about the speed and realibility of the app, which at scale can become a really challenging cost to deal with, both time and money wise.
-
-# Architecture
-
-![architecture](./assets/bytecrowds.drawio.png)
+![flow](./assets/bytecrowds.drawio.png)
 
 ## Data
 
-The data collected from the platform is stored using redis data types and cloudflare workers KV:
+The data collected from the platform is stored using redis data types:
 
 - a bytecrowd is stored as a redis hash having the following properties:
-  - text => string
-  - language => string
-  - authorizedEmails => string[]
+- text => string
+- language => string
+- authorizedEmails => string[]
 - the analytics data is stored as follows:
-  - a day's data is stored as a redish hash having the following properties:
-    - hits => int
-    - addresses => string[]
-    - uniqueVisitors => int
-    - countries => string[]
-    - continents => string[]
-    - pages => string[]
-  - the general stats are stored as sorted sets as follows:
-    - continents => { continent: string, score: int }[]
-    - countries => { country: string, score: int }[]
-    - pages => { page: string, score: int }[]
+- a day's data is stored as a redish hash having the following properties:
+- hits => int
+- addresses => string[]
+- uniqueVisitors => int
+- countries => string[]
+- continents => string[]
+- pages => string[]
+- the general stats are stored as sorted sets as follows:
+- continents => { continent: string, score: int }[]
+- countries => { country: string, score: int }[]
+- pages => { page: string, score: int }[]
 
 # Analytics
 
@@ -78,7 +97,7 @@ We use the y.js-codemirror bindings on react-codemirror and connect the editor t
 
 # IMPORTANT!
 
-This is a unified repository and is updated regularly, if needed. To see the timelined version check the [main](https://github.com/Bytecrowds/main) and [analytics](https://github.com/Bytecrowds/analytics) repositories.
+This is a unified repository and is updated regularly if needed. To see the timelined version check the [main](https://github.com/Bytecrowds/main) and [analytics](https://github.com/Bytecrowds/analytics) repositories.
 
 # Distinctions
 
