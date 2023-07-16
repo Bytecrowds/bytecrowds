@@ -4,7 +4,6 @@
 <a href="https://www.producthunt.com/posts/bytecrowds?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-bytecrowds" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=376402&theme=light" alt="Bytecrowds - an&#0032;easy&#0032;to&#0032;use&#0032;code&#0032;sharing&#0032;platform&#0032;with&#0032;minimalist&#0032;design | Product Hunt" style="width: 250px; height: 54px;" width="250" height="54" /></a>
 </p>
 
-
 # Sponsors
 
 Many thanks to the Upstash team for allowing this project to run on their serverless Redis infrastructure.
@@ -54,7 +53,7 @@ The data collected from the platform is stored using redis data types:
 - language => string
 - authorizedEmails => string[]
 - the analytics data is stored as follows:
-- a day's data is stored as a redish hash having the following properties:
+- a day's data is stored as a redis hash having the following properties:
 - hits => int
 - addresses => string[]
 - uniqueVisitors => int
@@ -72,7 +71,9 @@ Bytecrowds uses a custom analytics engine that sends the current page (with the 
 
 # Security
 
-We're using [auth.js](https://authjs.dev) for authentication. In addition to that, all routes require authentication regardless of the operation and affected resources. The authorizedEmails field can also be modified only from the database directly.
+We're using [auth.js](https://authjs.dev) for authentication. Once set, the list of authorized emails for a protected bytecrowd can only be modified from the database directly.
+
+The analytics engine needs to temporarily store the SHA-256 hashes of the visitors' IP addresses to determine the number of unique visitors the site has. Those hashes are regularly deleted.
 
 # How to run?
 
@@ -91,10 +92,14 @@ We're using [auth.js](https://authjs.dev) for authentication. In addition to tha
 
 ## Serverless Backend
 
-- we are using a custom [Ably](https://ably.com/) provider for syncing the clients ( thanks to the Ably team for helping with the provider )
+- we are using a custom [Ably](https://ably.com/) provider for syncing the clients ( thanks to the Ably team for helping with this one )
 - [Vercel functions](https://vercel.com/docs/concepts/functions/serverless-functions) for interacting with the database
 - [Cloudflare workers](https://workers.cloudflare.com/) for the analytics engine
 - [Upstash](https://upstash.com/) as the serverless redis provider
+
+## Other tools
+
+- [LogRocket](https://logrocket.com) for monitoring and error tracking
 
 ## How it works?
 
