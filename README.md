@@ -46,14 +46,14 @@ Serverless allows us to focus on code rather than infrastructure operations, whi
 
 ## Data
 
-The data collected from the platform is stored using redis data types:
+The data collected from the platform is stored using Redis data types:
 
-- a bytecrowd is stored as a redis hash having the following properties:
+- a bytecrowd is stored as a Redis hash having the following properties:
 - text => string
 - language => string
 - authorizedEmails => string[]
 - the analytics data is stored as follows:
-- a day's data is stored as a redis hash having the following properties:
+- a day's data is stored as a Redis hash having the following properties:
 - hits => int
 - addresses => string[]
 - uniqueVisitors => int
@@ -95,7 +95,7 @@ The analytics engine needs to temporarily store the SHA-256 hashes of the visito
 - we are using a custom [Ably](https://ably.com/) provider for syncing the clients ( thanks to the Ably team for helping with this one )
 - [Vercel functions](https://vercel.com/docs/concepts/functions/serverless-functions) for interacting with the database
 - [Cloudflare workers](https://workers.cloudflare.com/) for the analytics engine
-- [Upstash](https://upstash.com/) as the serverless redis provider
+- [Upstash](https://upstash.com/) as the serverless Redis provider
 
 ## Other tools
 
