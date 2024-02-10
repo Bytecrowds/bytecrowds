@@ -4,6 +4,20 @@
 <a href="https://www.producthunt.com/posts/bytecrowds?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-bytecrowds" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=376402&theme=light" alt="Bytecrowds - an&#0032;easy&#0032;to&#0032;use&#0032;code&#0032;sharing&#0032;platform&#0032;with&#0032;minimalist&#0032;design | Product Hunt" style="width: 250px; height: 54px;" width="250" height="54" /></a>
 </p>
 
+# Description
+
+> What's Bytecrowds?
+
+Bytecrowds is a simple and reliable serverless code sharing platform, which goal is to allow programmers to share code with peers in seconds.
+
+> How does it differ from other code sharing platforms?
+
+The infrastructure we use relies on serverless functions to maximize the reliability of the app, making requests on edge and auto-scaling
+
+> Why serverless?
+
+Serverless allows us to focus on code rather than infrastructure operations, which can cause a lot of problems when you need maximum stability and scaling.
+
 # Sponsors
 
 Many thanks to the Upstash team for allowing this project to run on their serverless Redis infrastructure.
@@ -26,20 +40,6 @@ Many thanks to the Upstash team for allowing this project to run on their server
 </td>
 </tr>
 
-# Description
-
-> What's Bytecrowds?
-
-Bytecrowds is a simple and reliable serverless code sharing platform, which goal is to allow programmers to share code with peers in seconds.
-
-> How does it differ from other code sharing platforms?
-
-The infrastructure we use relies on serverless functions to maximize the reliability of the app, making requests on edge and auto-scaling
-
-> Why serverless?
-
-Serverless allows us to focus on code rather than infrastructure operations, which can cause a lot of problems when you need maximum stability and scaling.
-
 # Flow
 
 ![flow](./assets/bytecrowds.drawio.png)
@@ -49,21 +49,48 @@ Serverless allows us to focus on code rather than infrastructure operations, whi
 The data collected from the platform is stored using Redis data types:
 
 - a bytecrowd is stored as a Redis hash having the following properties:
-- text => string
-- language => string
-- authorizedEmails => string[]
+
+```javascript
+{
+  text: string,
+  language: string,
+  authorizedEmails: string array
+}
+```
+
 - the analytics data is stored as follows:
-- a day's data is stored as a Redis hash having the following properties:
-- hits => int
-- addresses => string[]
-- uniqueVisitors => int
-- countries => string[]
-- continents => string[]
-- pages => string[]
-- the general stats are stored as sorted sets as follows:
-- continents => { continent: string, score: int }[]
-- countries => { country: string, score: int }[]
-- pages => { page: string, score: int }[]
+
+  - a day's data is stored as a Redis hash having the following properties:
+
+    ```javascript
+    {
+      hits: int,
+      addresses: string array,
+      uniqueVisitors: int,
+      countries: string array,
+      continents: string array,
+      pages: string array
+    }
+    ```
+
+  - the general stats are stored as sorted sets as follows:
+
+    ```javascript
+    {
+      continents: {
+          continent: string,
+          score: int
+      } array,
+      countries: {
+        country: string,
+        score: int
+      } array
+      pages: {
+        page: string,
+        score: int
+      } array
+    }
+    ```
 
 # Analytics
 
@@ -71,9 +98,9 @@ Bytecrowds uses a custom analytics engine that sends the current page (with the 
 
 # Security
 
-We're using [auth.js](https://authjs.dev) for authentication. Once set, the list of authorized emails for a protected bytecrowd can only be modified from the database directly.
+- We're using [auth.js](https://authjs.dev) for authentication. Once set, the list of authorized emails for a protected bytecrowd can only be modified from the database directly.
 
-The analytics engine needs to temporarily store the SHA-256 hashes of the visitors' IP addresses to determine the number of unique visitors the site has. Those hashes are regularly deleted.
+- The analytics engine needs to temporarily store the SHA-256 hashes of the visitors' IP addresses to determine the number of unique visitors the site has. Those hashes are regularly deleted.
 
 # How to run?
 
@@ -105,7 +132,7 @@ The analytics engine needs to temporarily store the SHA-256 hashes of the visito
 
 We use the y.js-codemirror bindings on react-codemirror and connect the editor to the global SyncedStore object, together with the Ably provider. The infrastructure can auto-scale to any number of users.
 
-# IMPORTANT!
+# Important!
 
 This is a unified repository and is updated regularly if needed. To see the timelined version check the [main](https://github.com/Bytecrowds/main) and [analytics](https://github.com/Bytecrowds/analytics) repositories.
 
