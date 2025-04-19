@@ -4,6 +4,10 @@
 <a href="https://www.producthunt.com/posts/bytecrowds?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-bytecrowds" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=376402&theme=light" alt="Bytecrowds - an&#0032;easy&#0032;to&#0032;use&#0032;code&#0032;sharing&#0032;platform&#0032;with&#0032;minimalist&#0032;design | Product Hunt" style="width: 250px; height: 54px;" width="250" height="54" /></a>
 </p>
 
+# Temporary unavailable!
+
+With apologies, Bytecrowds is currently unavailable due to errors encountered when upgrading dependencies. Any help is welcome!
+
 # Description
 
 > What's Bytecrowds?
